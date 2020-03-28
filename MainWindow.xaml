@@ -1,0 +1,132 @@
+﻿<Window x:Class="COVID_19.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:COVID_19"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <local:CountryConvertor x:Key="XCountryConvertor"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="Open Folder" Width="auto" Click="Button_Click"/>
+            <Label Name="UIFilename" Content="Nan"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Selected day:" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.Day}" Margin="0" Padding="10,0,0,0"/>
+                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Confirmed cases:" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.Confirmed}" Margin="0" Padding="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Deaths:" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.Deaths}" Margin="0" Padding="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Recovered:" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.Recovered}" Margin="0" Padding="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <Label Content="DaethRate1=Death\(Deaths+Recovered):" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.DeathRate1}" Margin="0" Padding="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="DeathRate2=Death\Cases:" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.DeathRate2}" Margin="0" Padding="10,0,0,0"/>
+                </StackPanel>
+
+                <Button Content="Exchange exclude and include lists" Click="Button_Exchange" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" ContentStringFormat="Included countries: {0}" Content="{Binding IncludedCountries.Count}"/>
+                <TextBox Grid.Row="1" Name="UISearchIN" TextChanged="TextBox_TextChanged"/>
+                <ScrollViewer Grid.Row="2" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Path=IncludedCountries, Converter={StaticResource XCountryConvertor}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" ContentStringFormat="Excluded countries: {0}" Content="{Binding ExcludedCountries.Count}"/>
+                <ScrollViewer Grid.Row="1" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Path=ExcludedCountries, Converter={StaticResource XCountryConvertor}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" AutoGenerateColumns="False" ItemsSource="{Binding LastDayStat.CountryStats}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Country" Width="auto" Binding="{Binding Name, Mode=OneWay}" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Confirmed" Width="auto" Binding="{Binding Confirmed, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Deaths" Width="auto" Binding="{Binding Deaths, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Recovered" Width="auto" Binding="{Binding Recovered, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="DeathRate1" Width="auto" Binding="{Binding DeathRate1, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="DeathRate2" Width="auto" Binding="{Binding DeathRate2, Mode=OneWay}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Column="1" x:Name="UIDays" AutoGenerateColumns="False" ItemsSource="{Binding DayStatModels}" >
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Day" Width="auto" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Confirmed" Width="auto" Binding="{Binding Confirmed, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Deaths" Width="auto" Binding="{Binding Deaths, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Recovered" Width="auto" Binding="{Binding Recovered, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="DeathRate1" Width="auto" Binding="{Binding DeathRate1, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="DeathRate2" Width="auto" Binding="{Binding DeathRate2, Mode=OneWay}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

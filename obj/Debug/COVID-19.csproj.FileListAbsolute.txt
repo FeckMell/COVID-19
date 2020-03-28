@@ -1,0 +1,17 @@
+C:\TESTS\GeneralTests\COVID-19\bin\Debug\COVID-19.exe.config
+C:\TESTS\GeneralTests\COVID-19\bin\Debug\COVID-19.exe
+C:\TESTS\GeneralTests\COVID-19\bin\Debug\COVID-19.pdb
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\MainWindow.g.cs
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\App.g.cs
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19_MarkupCompile.cache
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19_MarkupCompile.lref
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\MainWindow.baml
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19.g.resources
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID_19.Properties.Resources.resources
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19.csproj.GenerateResource.cache
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19.exe
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19.pdb
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\CountryView.baml
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\CountryView.g.cs
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\TESTS\GeneralTests\COVID-19\obj\Debug\COVID-19.csprojAssemblyReference.cache
