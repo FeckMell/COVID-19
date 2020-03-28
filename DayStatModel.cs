@@ -15,8 +15,8 @@ namespace COVID_19
     public double Confirmed => m_stat.CountryStats.Values.Where(x => !m_excludeCountries.Contains(x.Country)).Sum(x => x.Cases);
     public double Deaths => m_stat.CountryStats.Values.Where(x => !m_excludeCountries.Contains(x.Country)).Sum(x => x.Deaths);
     public double Recovered => m_stat.CountryStats.Values.Where(x => !m_excludeCountries.Contains(x.Country)).Sum(x => x.Recovered);
-    public string DeathRate1 => (Deaths + Recovered == 0) ? "0%" : $"{Deaths / (Deaths + Recovered) * 100:0.00}%";
-    public string DeathRate2 => (Confirmed == 0) ? "0%" : $"{Deaths / Confirmed * 100:0.00}%";
+    public double DeathRate1 => (Deaths + Recovered == 0) ? 0 : (Deaths / (Deaths + Recovered)) * 100;
+    public double DeathRate2 => (Confirmed == 0) ? 0 : (Deaths / Confirmed) * 100;
     public List<CountryStatModel> CountryStats => m_countryModels.Where(x => !m_excludeCountries.Contains(x.Name)).ToList();
 
 

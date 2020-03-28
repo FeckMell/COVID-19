@@ -9,8 +9,8 @@
     public double Confirmed => m_stat.Cases;
     public double Deaths => m_stat.Deaths;
     public double Recovered => m_stat.Recovered;
-    public string DeathRate1 => (Deaths + Recovered == 0) ? "0%" : $"{Deaths / (Deaths + Recovered) * 100:0.00}%";
-    public string DeathRate2 => (Confirmed == 0) ? "0%" : $"{Deaths / Confirmed * 100:0.00}%";
+    public double DeathRate1 => (Deaths + Recovered == 0) ? 0 : (Deaths / (Deaths + Recovered)) * 100;
+    public double DeathRate2 => (Confirmed == 0) ? 0 : (Deaths / Confirmed) * 100;
 
     public CountryStat m_stat { get; private set; }
 

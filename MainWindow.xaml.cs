@@ -53,5 +53,10 @@ namespace COVID_19
     {
       Model.LastDayStat = (e.Source as DataGridRow).DataContext as DayStatModel;
     }
+
+    private void Button_Clear(object sender, RoutedEventArgs e)
+    {
+      Model.ClearExcludeList();
+    }
   }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows.Documents;
 
 namespace COVID_19
 {
@@ -73,7 +72,7 @@ namespace COVID_19
           }
         }
       }
-      catch(Exception ex)
+      catch (Exception ex)
       {
         Errors.Add($"Couldn't parse file {filename}: {ex}");
       }

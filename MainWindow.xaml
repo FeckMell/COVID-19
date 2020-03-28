@@ -34,7 +34,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Selected day:" Margin="0" Padding="10,0,0,0"/>
                     <Label Content="{Binding LastDayStat.Day}" Margin="0" Padding="10,0,0,0"/>
-                 </StackPanel>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Confirmed cases:" Margin="0" Padding="10,0,0,0"/>
                     <Label Content="{Binding LastDayStat.Confirmed}" Margin="0" Padding="10,0,0,0"/>
@@ -49,11 +49,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                     <Label Content="DaethRate1=Death\(Deaths+Recovered):" Margin="0" Padding="10,0,0,0"/>
-                    <Label Content="{Binding LastDayStat.DeathRate1}" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.DeathRate1}" ContentStringFormat=" {0:0.00}%" Margin="0" Padding="10,0,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="DeathRate2=Death\Cases:" Margin="0" Padding="10,0,0,0"/>
-                    <Label Content="{Binding LastDayStat.DeathRate2}" Margin="0" Padding="10,0,0,0"/>
+                    <Label Content="{Binding LastDayStat.DeathRate2}" ContentStringFormat=" {0:0.00}%" Margin="0" Padding="10,0,0,0"/>
                 </StackPanel>
 
                 <Button Content="Exchange exclude and include lists" Click="Button_Exchange" Margin="0,5,0,0"/>
@@ -81,10 +81,12 @@
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" ContentStringFormat="Excluded countries: {0}" Content="{Binding ExcludedCountries.Count}"/>
-                <ScrollViewer Grid.Row="1" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Button Grid.Row="1" Content="Clear" Click="Button_Clear"/>
+                <ScrollViewer Grid.Row="2" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Path=ExcludedCountries, Converter={StaticResource XCountryConvertor}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -107,12 +109,24 @@
                     <DataGridTextColumn Header="Confirmed" Width="auto" Binding="{Binding Confirmed, Mode=OneWay}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Deaths" Width="auto" Binding="{Binding Deaths, Mode=OneWay}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Recovered" Width="auto" Binding="{Binding Recovered, Mode=OneWay}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DeathRate1" Width="auto" Binding="{Binding DeathRate1, Mode=OneWay}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DeathRate2" Width="auto" Binding="{Binding DeathRate2, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="DeathRate1" Width="auto" SortMemberPath="DeathRate1">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding DeathRate1, Mode=OneWay}" ContentStringFormat=" {0:0.00}%" Padding="0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="DeathRate1" Width="auto" SortMemberPath="DeathRate2">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding DeathRate2, Mode=OneWay}" ContentStringFormat=" {0:0.00}%" Padding="0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Column="1" x:Name="UIDays" AutoGenerateColumns="False" ItemsSource="{Binding DayStatModels}" >
+            <DataGrid Grid.Column="1" x:Name="UIDays" AutoGenerateColumns="False" ItemsSource="{Binding DayStatModels}" ToolTip="Double click any row to set it as selected day">
                 <DataGrid.ItemContainerStyle>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
@@ -123,10 +137,23 @@
                     <DataGridTextColumn Header="Confirmed" Width="auto" Binding="{Binding Confirmed, Mode=OneWay}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Deaths" Width="auto" Binding="{Binding Deaths, Mode=OneWay}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Recovered" Width="auto" Binding="{Binding Recovered, Mode=OneWay}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DeathRate1" Width="auto" Binding="{Binding DeathRate1, Mode=OneWay}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DeathRate2" Width="auto" Binding="{Binding DeathRate2, Mode=OneWay}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="DeathRate1" Width="auto" SortMemberPath="DeathRate1">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding DeathRate1, Mode=OneWay}" ContentStringFormat=" {0:0.00}%" Padding="0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="DeathRate1" Width="auto" SortMemberPath="DeathRate2">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding DeathRate2, Mode=OneWay}" ContentStringFormat=" {0:0.00}%" Padding="0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+
     </Grid>
 </Window>

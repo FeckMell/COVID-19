@@ -52,6 +52,7 @@ namespace COVID_19
     private List<string> m_excludedCountries => ExcludedCountries.Select(x => x.Name).ToList();
     private List<CountryModel> m_filteredCountries => Countries.Where(x => x.Name.ToUpper().Contains(m_search.ToUpper())).ToList();
     private string m_search = "";
+    private bool m_coutryFilterLock = false;
 
     /// <summary>
     /// Constructor
@@ -65,7 +66,6 @@ namespace COVID_19
     /// <summary>
     /// Search
     /// </summary>
-    /// <param name="search"></param>
     public void SetSearch(string search)
     {
       m_search = search;
@@ -74,18 +74,30 @@ namespace COVID_19
     }
 
     /// <summary>
+    /// Clears Exclude countries list
+    /// </summary>
+    public void ClearExcludeList()
+    {
+      m_coutryFilterLock = true;
+      foreach (var e in Countries)
+        e.IsExcluded = false;
+      m_coutryFilterLock = false;
+
+      SetExcludeList();
+    }
+
+    /// <summary>
     /// Exchanges lists of include and Exclude
     /// </summary>
     public void ExchangeLists()
     {
-      m_exchangeBlock = true;
+      m_coutryFilterLock = true;
       foreach (var e in Countries)
         e.IsExcluded = !e.IsExcluded;
-      m_exchangeBlock = false;
+      m_coutryFilterLock = false;
 
       SetExcludeList();
     }
-    private bool m_exchangeBlock = false;
 
     /// <summary>
     /// ResetManager
@@ -124,7 +136,7 @@ namespace COVID_19
     /// </summary>
     private void Country_ValueChanged(bool isExcluded)
     {
-      if (m_exchangeBlock)
+      if (m_coutryFilterLock)
         return;
       SetExcludeList();
     }
